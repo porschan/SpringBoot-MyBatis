@@ -2,11 +2,10 @@ package com.chanchifeng.curd.controller;
 
 import com.chanchifeng.curd.model.SysUser;
 import com.chanchifeng.curd.service.SysUserService;
+import com.chanchifeng.curd.vo.PageVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -66,4 +65,17 @@ public class CurdController {
 
         return "redirect:/curdController/queryAll";
     }
+
+
+    /* START 模糊查询 & 分页 */
+
+    @RequestMapping(value="/findAllJSON")
+    @ResponseBody
+    public PageVo<SysUser> findAllJson(SysUser sysUser, @RequestParam("page") int page,@RequestParam("limit") int limit){
+        System.out.println("thisss??!");
+        PageVo<SysUser> sysUserPageVo = sysUserService.selectAll(sysUser, page, limit);
+        return sysUserPageVo;
+    }
+
+    /* END 模糊查询 & 分页 */
 }

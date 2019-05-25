@@ -1,6 +1,7 @@
 package com.chanchifeng.curd.mapper;
 
 import com.chanchifeng.curd.model.SysUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -54,4 +55,8 @@ public interface SysUserMapper {
     int updateByPrimaryKey(SysUser record);
 
     List<SysUser> queryAll();
+
+    List<SysUser> selectAll(@Param("sysUser") SysUser sysUser, @Param("startIndex") int startIndex, @Param("pageSize") int pageSize);
+
+    int count(@Param("sysUser") SysUser sysUser);
 }

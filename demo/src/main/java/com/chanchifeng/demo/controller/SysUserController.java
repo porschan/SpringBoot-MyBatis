@@ -20,10 +20,8 @@ public class SysUserController {
     @RequestMapping("/showUserToJspById/{userId}")
     @ResponseBody
     public SysUser showUser(Model model, @PathVariable("userId") Long userId){
-        System.out.println("this?" + userId);
         SysUser user = this.sysUserService.getById(userId);
 
-//        model.addAttribute("user", user);
         return user;
     }
 }

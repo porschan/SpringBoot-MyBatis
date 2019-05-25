@@ -3,6 +3,7 @@ package com.chanchifeng.curd.service.impl;
 import com.chanchifeng.curd.mapper.SysUserMapper;
 import com.chanchifeng.curd.model.SysUser;
 import com.chanchifeng.curd.service.SysUserService;
+import com.chanchifeng.curd.vo.PageVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -46,5 +47,23 @@ public class SysUserServiceImpl implements SysUserService {
         return sysUserMapper.insertSelective(record);
     }
     /* END CURD */
+
+    /* START 模糊搜索 + 分页*/
+
+    @Override
+    public PageVo<SysUser> selectAll(SysUser sysUser, int startIndex, int pageSize) {
+        int totalNum;
+        if(pageSize<=0){
+            totalNum = pageSize;
+        }else {
+            totalNum = sysUserMapper.count(sysUser);
+        }
+        PageVo<SysUser> pageVo = new PageVo<>(startIndex,pageSize,totalNum);
+        pageVo.setItems(sysUserMapper.selectAll(sysUser,pageVo.getStartIndex(),pageSize));
+        pageVo.setTotalNum(totalNum);
+        return pageVo;
+    }
+
+    /* END 模糊搜索 +  分页 */
 
 }

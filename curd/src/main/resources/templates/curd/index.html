@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/common/layerui/css/layui.css}" media="all">
 </head>
 <body>
 CURD
@@ -26,27 +27,74 @@ CURD
     </p>
 </form>
 
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>姓名</th>
-        <th>密码</th>
-        <th>操作</th>
-    </tr>
+<!--<table border="1">-->
+<!--    <tr>-->
+<!--        <th>ID</th>-->
+<!--        <th>姓名</th>-->
+<!--        <th>密码</th>-->
+<!--        <th>操作</th>-->
+<!--    </tr>-->
 
 
-    <tr th:each="user : ${users}">
-        <td th:text="${user.sysUserId}"></td>
-        <td th:text="${user.sysUserLoginName}"></td>
-        <td th:text="${user.sysUserLoginPassword}"></td>
-        <td>
-            <a th:href="@{delete/} + ${user.sysUserId}">删除</a>
-            <a th:href="@{queryById/} + ${user.sysUserId}">修改</a>
-        </td>
-    </tr>
+<!--    <tr th:each="user : ${users}">-->
+<!--        <td th:text="${user.sysUserId}"></td>-->
+<!--        <td th:text="${user.sysUserLoginName}"></td>-->
+<!--        <td th:text="${user.sysUserLoginPassword}"></td>-->
+<!--        <td>-->
+<!--            <a th:href="@{delete/} + ${user.sysUserId}">删除</a>-->
+<!--            <a th:href="@{queryById/} + ${user.sysUserId}">修改</a>-->
+<!--        </td>-->
+<!--    </tr>-->
 
-</table>
+<!--</table>-->
 
+layerUI - jquery
 
+条件搜索：
+name:<input type="text" id="sysUserLoginNameSearch" value="2">
+password:<input type="text" id="sysUserLoginPasswordSearch" value="122">
+
+<table id="demo" lay-filter="test"></table>
+
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script><!-- 你必须先引入jQuery1.8或以上版本 -->
+<script th:src="@{/common/layerui/layui.js}"></script>
+
+<script th:inline="none">
+
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height:510
+            ,url: 'findAllJSON' //数据接口
+            ,where:{
+                sysUserLoginName:$("#sysUserLoginNameSearch").val()
+                ,sysUserLoginPassword:$("#sysUserLoginPasswordSearch").val()
+            }
+            ,response: {
+                countName:'totalNum'
+                ,dataName: 'items'
+                ,statusName: 'code'
+            }
+            ,page: true //开启分页
+            ,limit: 10
+            ,cols: [[ //表头
+                {field: 'sysUserLoginName', title: 'ID', width:80, sort: true, fixed: 'left'}
+                ,{field: 'sysUserLoginPassword', title: '用户名', width:80}
+
+                ,{field:'title', title: '文章标题', width: 150
+                    ,templet: function(d){
+                        return '<a class="layui-btn layui-btn-sm layui-btn-danger" href="delete/' + d.sysUserId + '">删除</a>' +
+                            '<a class="layui-btn layui-btn-sm layui-btn-normal" href="queryById/' + d.sysUserId + '">修改</a>'
+                    }
+                }
+            ]]
+        });
+
+    });
+
+</script>
 </body>
 </html>
