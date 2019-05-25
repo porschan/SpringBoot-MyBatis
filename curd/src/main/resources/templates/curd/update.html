@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+update
+
+<form action="../update" method="post" th:object="${user}">
+
+    <p>
+        <label>姓名：</label>
+        <input type="text" name="sysUserLoginName" value="" id="sysUserLoginName" th:field="*{sysUserLoginName}"/>
+    </p>
+    <p>
+        <label>密码：</label>
+        <input type="text" name="sysUserLoginPassword" value="" id="sysUserLoginPassword" th:field="*{sysUserLoginPassword}"/>
+    </p>
+    <p>
+        <input type="hidden" name="sysUserId" value="" id="sysUserId" th:field="*{sysUserId}"/>
+        <input type="submit" value="修改">
+    </p>
+</form>
+</body>
+</html>
